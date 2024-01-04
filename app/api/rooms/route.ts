@@ -15,12 +15,8 @@ dbConnect();
 
 router.get(allRooms);
 
-router.post(newRoom);
+
 
 export async function GET( request: NextRequest , context: RequestContext) {
-    return router.run(request, context);
-}
-
-export async function POST( request: NextRequest , context: RequestContext) {
     return router.run(request, context);
 }

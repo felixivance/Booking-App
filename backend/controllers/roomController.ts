@@ -21,6 +21,7 @@ export const newRoom = async (request: NextRequest) => {
     })
 }
 
+// api/room/[id]
 export const getRoomDetails = async (request: NextRequest, { params }: { params:{id:string}}) => {
     const { id } = params;
 
@@ -36,5 +37,50 @@ export const getRoomDetails = async (request: NextRequest, { params }: { params:
     return NextResponse.json({
         success: true,
         room
+    })
+}
+
+// update room details => /api/admin/rooms/[id]
+export const updateRoom = async (request: NextRequest, { params }: { params:{id:string}}) => {
+    
+    let room = await Room.findById(params.id);
+
+    if(!room){
+        return NextResponse.json({
+            success: false,
+            message: 'Room not found'
+        }, { status: 404})
+    }
+    let body = await request.json();
+
+    room = await Room.findByIdAndUpdate(params.id, body,{
+        new: true // return the new updated data
+    })
+
+    return NextResponse.json({
+        success:true,
+        room
+    })
+}
+
+// delete room -> api/admin/[id]
+export const deleteRoom = async (request: NextRequest, { params }: { params:{id:string}})=>{
+    
+    const { id } = params;
+
+    let room  = await Room.findById(id);
+
+    if(!room){
+        return NextResponse.json({
+            success:false,
+            message: "room not found"
+        })
+    }
+
+    await Room.findByIdAndDelete(id);
+
+    return NextResponse.json({
+        success:true,
+        message: "Room deleted successfully"
     })
 }
