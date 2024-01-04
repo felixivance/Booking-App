@@ -7,7 +7,7 @@ const dbConnect = async () => {
 
     let DB_URI = process.env.MONGO_URI;
 
-    await mongoose.connect(DB_URI!)
+    await mongoose.connect(DB_URI!).then((conn)=> console.log(`MongoDB Connected: ${conn.connection.host}`))
 }
 
 export default dbConnect;
