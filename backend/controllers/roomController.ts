@@ -76,8 +76,10 @@ export const deleteRoom = async (request: NextRequest, { params }: { params:{id:
             message: "room not found"
         })
     }
+    // TODO: delete image associated with the room
 
     await Room.findByIdAndDelete(id);
+
 
     return NextResponse.json({
         success:true,
