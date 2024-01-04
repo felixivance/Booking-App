@@ -3,7 +3,11 @@ import Room from "../models/room";
 
 
 export const allRooms = async (request: NextRequest) => {
-    return NextResponse.json({"message": "Hello from the API!"})
+    const rooms  = await Room.find();
+    return NextResponse.json({
+        success: true,
+        rooms
+    })
 }
 
 export const newRoom = async (request: NextRequest) => {
