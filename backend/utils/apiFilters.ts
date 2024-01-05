@@ -22,11 +22,20 @@ class ApiFilters {
     filter(): ApiFilters{
         const queryStringCopy = { ...this.queryStr}
         // remove fields from the query
-        const removeFields = ['location']
+        const removeFields = ['location','page']
 
         removeFields.forEach((el) => delete queryStringCopy[el]) // delete the fields from the query
 
         this.query = this.query.find(queryStringCopy);
+
+        return this;
+    }
+
+    pagination(resultsPerPage: number): ApiFilters{
+        const currentPage = Number(this.queryStr.page) || 1;
+        const skip = resultsPerPage * (currentPage -1); // skip the first 5 results
+
+        this.query = this.query.limit(resultsPerPage).skip(skip)
 
         return this;
     }

@@ -7,6 +7,7 @@ import ApiFilters from "../utils/apiFilters";
 
 export const allRooms = catchAsyncErrors( async (request: NextRequest) => {
     // const rooms  = await Room.find();
+    const resultsPerPage = 5; // default results per page
 
     const { searchParams} = new URL(request.url);
     const queryString : any = {};
@@ -15,14 +16,24 @@ export const allRooms = catchAsyncErrors( async (request: NextRequest) => {
         queryString[key] = value;
     })
 
-    const apiFilters = new ApiFilters(Room, queryString).search().filter(); // search and filter the rooms
+    const allRoomsCount = await Room.countDocuments(); // get the total number of rooms
 
-    const rooms : InterfaceRoom[] = await apiFilters.query;
+    const filteredRooms = new ApiFilters(Room, queryString).search().filter(); // search and filter the rooms
+
+    let rooms : InterfaceRoom[] = await filteredRooms.query;
+    const filteredRoomsCount : number = rooms.length;
     
+    filteredRooms.pagination(resultsPerPage);
+    rooms = await filteredRooms.query.clone(); // clone the query to get the total number of pages without the pagination applied to it 
+
 
     return NextResponse.json({
         success: true,
-        rooms
+        filteredRoomsCount,
+        resultsPerPage,
+        total: allRoomsCount,
+        rooms,
+        
     })
 })
 
