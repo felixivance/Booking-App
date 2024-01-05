@@ -3,7 +3,7 @@ import 'boostrap/dist/css/boostrap.min.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Header from './components/header'
+import Head from './head'
 import { GlobalProvider } from './GlobalProvider'
 import Script from 'next/script'
 
@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Header />
+      <Head />
       <body className={inter.className}>
           <GlobalProvider>
             {children}
