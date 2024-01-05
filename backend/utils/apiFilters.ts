@@ -18,6 +18,18 @@ class ApiFilters {
         this.query = this.query.find({...location});
         return this; // return the entire object
     }
+
+    filter(): ApiFilters{
+        const queryStringCopy = { ...this.queryStr}
+        // remove fields from the query
+        const removeFields = ['location']
+
+        removeFields.forEach((el) => delete queryStringCopy[el]) // delete the fields from the query
+
+        this.query = this.query.find(queryStringCopy);
+
+        return this;
+    }
 }
 
 export default ApiFilters;
