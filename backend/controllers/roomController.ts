@@ -1,16 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import Room from "../models/room";
+import ErrorHandler from "../utils/errorHandler";
+import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 
 
-export const allRooms = async (request: NextRequest) => {
+export const allRooms = catchAsyncErrors( async (request: NextRequest) => {
     const rooms  = await Room.find();
     return NextResponse.json({
         success: true,
         rooms
     })
-}
+})
 
-export const newRoom = async (request: NextRequest) => {
+export const newRoom = catchAsyncErrors( async (request: NextRequest) => {
     const body = await request.json();
 
     const room = await Room.create(body);
@@ -19,15 +21,18 @@ export const newRoom = async (request: NextRequest) => {
         success: true,
         room
     })
-}
+})
 
 // api/room/[id]
-export const getRoomDetails = async (request: NextRequest, { params }: { params:{id:string}}) => {
+export const getRoomDetails = catchAsyncErrors( async (request: NextRequest, { params }: { params:{id:string}}) => {
+
     const { id } = params;
 
     const room = await Room.findById(id);
 
     if(!room) {
+        //  new ErrorHandler('Room not found with this ID', 404);
+
         return NextResponse.json({
             success: false,
             message: 'Room not found with this ID'
@@ -38,10 +43,11 @@ export const getRoomDetails = async (request: NextRequest, { params }: { params:
         success: true,
         room
     })
-}
+   
+})
 
 // update room details => /api/admin/rooms/[id]
-export const updateRoom = async (request: NextRequest, { params }: { params:{id:string}}) => {
+export const updateRoom = catchAsyncErrors( async (request: NextRequest, { params }: { params:{id:string}}) => {
     
     let room = await Room.findById(params.id);
 
@@ -61,10 +67,10 @@ export const updateRoom = async (request: NextRequest, { params }: { params:{id:
         success:true,
         room
     })
-}
+})
 
 // delete room -> api/admin/[id]
-export const deleteRoom = async (request: NextRequest, { params }: { params:{id:string}})=>{
+export const deleteRoom = catchAsyncErrors( async (request: NextRequest, { params }: { params:{id:string}})=>{
     
     const { id } = params;
 
@@ -85,4 +91,4 @@ export const deleteRoom = async (request: NextRequest, { params }: { params:{id:
         success:true,
         message: "Room deleted successfully"
     })
-}
+})
