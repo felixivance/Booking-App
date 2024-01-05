@@ -1,8 +1,11 @@
+import 'boostrap/dist/css/boostrap.min.css'
+
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from './components/header'
 import { GlobalProvider } from './GlobalProvider'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,6 +26,8 @@ export default function RootLayout({
           <GlobalProvider>
             {children}
           </GlobalProvider>
+
+          <Script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/boostrap.bundle.min.js"></Script>
         </body>
     </html>
   )

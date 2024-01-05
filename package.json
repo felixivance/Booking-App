@@ -10,11 +10,13 @@
     "seeder": "tsc seeder/seeder.ts --outDir .temp && node .temp/seeder/seeder.js && rm -rf .temp"
   },
   "dependencies": {
+    "boostrap": "^2.0.0",
     "mongoose": "^8.0.3",
     "next": "14.0.4",
     "next-connect": "^1.0.0-next.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-icons": "^4.12.0"
   },
   "devDependencies": {
     "@types/node": "^20",
