@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 type Props = {}
 
-const Home = (props: Props) => {
+const Home = ({data}) => {
 
     
 
