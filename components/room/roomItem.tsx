@@ -1,5 +1,6 @@
 "use client";
 import { InterfaceRoom } from '@/backend/models/room';
+import Link from 'next/link';
 import React from 'react'
 import StarRatings from 'react-star-ratings';
 
@@ -28,7 +29,7 @@ function RoomItem({room}: Props) {
             <div>
             <div className='d-flex'>
                 <StarRatings
-                rating={4}
+                rating={room?.ratings}
                 starRatedColor="#ffb400"
                 numberOfStars={5}
                 name="rating"
@@ -37,7 +38,7 @@ function RoomItem({room}: Props) {
                 />
                 <span className="no-of-reviews">({room?.numOfReviews} Reviews)</span>
             </div>
-            <a className="btn view-btn mt-3 w-100" href="/rooms/roomId">View Details</a>
+            <Link className="btn view-btn mt-3 w-100" href={`/rooms/${room?._id}`}>View Details</Link>
             </div>
         </div>
         </div>
