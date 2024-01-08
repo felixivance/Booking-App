@@ -3,12 +3,21 @@
 import React from 'react'
 import RoomItem from './room/roomItem'
 import toast from 'react-hot-toast';
+import { InterfaceRoom } from '@/backend/models/room';
 
-type Props = {}
+interface Props  {
+    data: {
+        success: boolean;
+        resultsPerPage: number;
+        filteredRoomsCount: number;
+        rooms: InterfaceRoom[];
+    }
+}
 
-const Home = () => {
+const Home = ({data}: Props) => {
 
-    // console.log(data)
+    const { rooms, resultsPerPage, filteredRoomsCount} = data;
+    console.log(data);
 
   return (
         <div>
@@ -18,7 +27,14 @@ const Home = () => {
             <i className="fa fa-arrow-left"></i> Back to Search
             </a>
             <div className="row mt-4">
-                <RoomItem/>
+                {
+                    rooms.length === 0 ?
+                    <div className="alert alert-danger mt-5 w-100">
+                        <b>No Rooms available</b>
+                    </div>
+                    :
+                    rooms.map((room)=> <RoomItem key={room._id} room={room} />)
+                }
             </div>
         </section>
         </div>

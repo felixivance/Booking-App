@@ -24,5 +24,5 @@ export default async function HomePage() {
   }
   
   // data={data}
-  return <HomeComponent />
+  return <HomeComponent data={data} />
 }
