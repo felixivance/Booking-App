@@ -23,6 +23,6 @@ export default async function HomePage() {
     return <Error error={data} />
   }
   
-  
-  return <HomeComponent data={data}/>
+  // data={data}
+  return <HomeComponent />
 }

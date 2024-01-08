@@ -6,9 +6,9 @@ import toast from 'react-hot-toast';
 
 type Props = {}
 
-const Home = ({data}) => {
+const Home = () => {
 
-    
+    // console.log(data)
 
   return (
         <div>
@@ -18,9 +18,7 @@ const Home = ({data}) => {
             <i className="fa fa-arrow-left"></i> Back to Search
             </a>
             <div className="row mt-4">
-            
                 <RoomItem/>
-            
             </div>
         </section>
         </div>
