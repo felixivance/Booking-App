@@ -12,7 +12,7 @@ return (
             <a href="/">
             <img
                 style={{ cursor: "pointer"}}
-                src="images/bookit_logo.png"
+                src="/images/bookit_logo.png"
                 alt="BookIT"
             />
             </a>

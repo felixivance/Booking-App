@@ -2,8 +2,11 @@ import HomeComponent from '../components/Home'
 import Error from './error';
 
 //you can also specify revalidate time in seconds as an export const
-export const revalidate = 60; //this also works and you dont have to include it on the fetch request
+// export const revalidate = 60; //this also works and you dont have to include it on the fetch request
 
+export const metadata = {
+  title: 'Home - Book It App'
+}
 const getRooms = async () =>{
   const res = await fetch(`${process.env.APP_URL}/api/rooms`,
   {
