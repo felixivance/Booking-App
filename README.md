@@ -5,3 +5,7 @@ The application consists of both a frontend and a backend.
 The frontend is built with Next.js and Tailwind CSS. 
 
 The backend is built with NextJs and [MongoDB](https://www.mongodb.com/).
+
+start mongo services (eg in Mac)
+
+brew services start mongodb-community

@@ -39,6 +39,17 @@ export interface InterfaceRoom extends Document {
     updatedAt: Date;
 };
 
+export interface InterfaceRoomImage {
+    public_id: {
+        type: String,
+        required: true
+    },
+    url: {
+        type: String,
+        required: true
+    }
+}
+
 const roomSchema: Schema = new mongoose.Schema({
     name: {
         type: String,
