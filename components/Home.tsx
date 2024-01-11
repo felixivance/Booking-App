@@ -4,6 +4,7 @@ import React from 'react'
 import RoomItem from './room/roomItem'
 import toast from 'react-hot-toast';
 import { InterfaceRoom } from '@/backend/models/room';
+import CustomPagination from './layout/CustomPagination';
 
 interface Props  {
     data: {
@@ -37,6 +38,7 @@ const Home = ({data}: Props) => {
                 }
             </div>
         </section>
+        <CustomPagination resultsPerPage={resultsPerPage} filteredRoomsCount={filteredRoomsCount}/>
         </div>
     )
 }
