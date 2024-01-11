@@ -7,19 +7,22 @@ import Error from './error';
 export const metadata = {
   title: 'Home - Book It App'
 }
-const getRooms = async () =>{
-  const res = await fetch(`${process.env.APP_URL}/api/rooms`,
+const getRooms = async (searchParams:string) =>{
+
+  const urlParams = new URLSearchParams(searchParams);
+  const queryString = urlParams.toString();
+  const res = await fetch(`${process.env.APP_URL}/api/rooms?${queryString}`,
   {
-    // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     // next: { revalidate: 3600} // refresh after 1 hour (3600 seconds)
   }
   )
   return res.json()
 }
 
-export default async function HomePage() {
+export default async function HomePage({searchParams}:{searchParams:string}) {
 
-  const data = await getRooms();
+  const data = await getRooms(searchParams);
 
   if(data?.message){
     // reset={() => window.location.reload()} 
