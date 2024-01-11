@@ -1,4 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
+import "bootstrap-icons/font/bootstrap-icons.css";
+import 'font-awesome/css/font-awesome.min.css';
 
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
@@ -8,6 +10,7 @@ import { GlobalProvider } from './GlobalProvider'
 import Script from 'next/script'
 import Header from '@/components/layout/header'
 import Footer from '@/components/layout/footer'
+
 
 const inter = Inter({ subsets: ['latin'] })
 
