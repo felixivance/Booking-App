@@ -7,7 +7,7 @@ import ApiFilters from "../utils/apiFilters";
 
 export const allRooms = catchAsyncErrors( async (request: NextRequest) => {
     // const rooms  = await Room.find();
-    const resultsPerPage = 2; // default results per page
+    const resultsPerPage = 4; // default results per page
 
     const { searchParams} = new URL(request.url);
     const queryString : any = {};
