@@ -24,6 +24,7 @@ const searchParams = useSearchParams();
 
 const location = searchParams.get('location');
 
+
 return (
         <div>
         <section id="rooms" className="container mt-5">
@@ -31,7 +32,7 @@ return (
                 { location ? `${filteredRoomsCount} Room(s) Found in ${location}` : 'All Rooms'}
             </h2>
             <a href="/search" className="ml-2 back-to-search">
-            <i className="fa fa-arrow-left"></i> Back to Search
+            <i className="fa fa-arrow-left me-1"></i> Back to Search
             </a>
             <div className="row mt-4">
                 {
