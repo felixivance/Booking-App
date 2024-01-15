@@ -15,8 +15,7 @@ const getRoom = async (id:string) =>{
 
 export default async function RoomDetailsPage({params}: Props){
     const data = await getRoom(params?.id);
-    console.log("here");
-    console.log(data);
+   
     if(data?.message){
         return <Error error={data} />;
     }

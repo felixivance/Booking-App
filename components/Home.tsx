@@ -5,6 +5,7 @@ import RoomItem from './room/roomItem'
 import toast from 'react-hot-toast';
 import { InterfaceRoom } from '@/backend/models/room';
 import CustomPagination from './layout/CustomPagination';
+import { useSearchParams } from 'next/navigation';
 
 interface Props  {
     data: {
@@ -17,13 +18,18 @@ interface Props  {
 
 const Home = ({data}: Props) => {
 
-    const { rooms, resultsPerPage, filteredRoomsCount} = data;
-    console.log(data);
+const { rooms, resultsPerPage, filteredRoomsCount} = data;
 
-  return (
+const searchParams = useSearchParams();
+
+const location = searchParams.get('location');
+
+return (
         <div>
         <section id="rooms" className="container mt-5">
-            <h2 className="mb-3 ml-2 stays-heading" onClick={()=>toast.success('Hello toast!')} >All Rooms</h2>
+            <h2 className="mb-3 ml-2 stays-heading" onClick={()=>toast.success('Hello toast!')} >
+                { location ? `${filteredRoomsCount} Room(s) Found in ${location}` : 'All Rooms'}
+            </h2>
             <a href="/search" className="ml-2 back-to-search">
             <i className="fa fa-arrow-left"></i> Back to Search
             </a>
