@@ -1,4 +1,5 @@
 
+import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 type Props = {}
@@ -50,6 +51,7 @@ return (
             <a href="/" className="dropdown-item text-danger">Logout</a>
             </div>
         </div>
+            <Link href="/login" className='btn btn-danger px-4 text-white login-header-btn float-right'> Login</Link>
         </div>
     </div>
     </nav>
