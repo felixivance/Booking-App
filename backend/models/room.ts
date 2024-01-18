@@ -50,7 +50,7 @@ export interface InterfaceRoomImage {
     }
 }
 
-const roomSchema: Schema = new mongoose.Schema({
+const roomSchema: Schema<InterfaceRoom> = new mongoose.Schema({
     name: {
         type: String,
         required: [ true, 'Please enter a room name' ],
