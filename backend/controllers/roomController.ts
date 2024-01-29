@@ -67,16 +67,18 @@ export const getRoomDetails = catchAsyncErrors( async (request: NextRequest, { p
    
 })
 
+
 // update room details => /api/admin/rooms/[id]
-export const updateRoom = catchAsyncErrors( async (request: NextRequest, { params }: { params:{id:string}}) => {
+export const updateRoom = catchAsyncErrors( 
+    async (request: NextRequest, { params }: { params:{id:string}}) => {
     
     let room = await Room.findById(params.id);
+    const body = await request.json();
 
     if(!room){
         throw new ErrorHandler('Room not found', 404);
     }
-    let body = await request.json();
-
+    
     room = await Room.findByIdAndUpdate(params.id, body,{
         new: true // return the new updated data
     })

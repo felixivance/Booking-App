@@ -18,10 +18,10 @@ router.delete(deleteRoom);
 
 
 export async function PUT( request: NextRequest, context: RequestContext){
-    return router.run(request,context)
+    return router.run(request, context)
 }
 
 
 export async function DELETE(request: NextRequest, context: RequestContext){
-    return router.run(request,context)
+    return router.run(request, context)
 }
