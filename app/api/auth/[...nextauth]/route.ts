@@ -10,6 +10,9 @@ type Credentials = {
     password: string;
 }
 
+type Token = {
+    user: InterfaceUser
+}
 async function auth(request: NextApiRequest, response: NextApiResponse){
     return await NextAuth(request, response, {
         session: {
@@ -44,7 +47,15 @@ async function auth(request: NextApiRequest, response: NextApiResponse){
             jwt: async ({token, user})=>{
                 user && (token.user = user)
 
-                // todo - update session when user is updated
+                const jwtToken  = token as Token
+
+                //  update session when user is updated
+                if(request.url?.includes("/api/auth/session?update")){
+                    // hit the database and return the updated user
+                    const updatedUser = await User.findById(jwtToken?.user._id)
+                    token.user = updatedUser
+                }
+
                 return token
             },
             session: async ({session, token})=>{

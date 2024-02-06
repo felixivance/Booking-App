@@ -1,9 +1,10 @@
 "use client"
-import { useUpdateProfileMutation } from '@/redux/api/userApi';
+import { useLazyUpdateSessionQuery, useUpdateProfileMutation } from '@/redux/api/userApi';
 import { useAppSelector } from '@/redux/hooks';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
+import ButtonLoader from '../layout/ButtonLoader';
 
 function UpdateProfile() {
 
@@ -16,12 +17,20 @@ function UpdateProfile() {
     console.log(currentUser);
 
     const [ updateProfile, { isLoading, error, isSuccess } ] = useUpdateProfileMutation();
+
+    const [ updateSession, { data }] = useLazyUpdateSessionQuery();
+
+    console.log(data);
+
     const router = useRouter();
 
     useEffect(() => {
         if (currentUser) {
+          //@ts-ignore 
           setName(currentUser?.name);
-          setEmail(currentUser?.email);
+          //@ts-ignore
+          setEmail(currentUser?.email); 
+          //@ts-ignore
           setId(currentUser?._id);
 
         }
@@ -31,6 +40,7 @@ function UpdateProfile() {
         }
 
         if(isSuccess){
+            updateSession({ userId: _id })
             router.refresh() // refresh the route
         }
       },[currentUser, error, isSuccess]);
@@ -74,7 +84,9 @@ function UpdateProfile() {
             />
           </div>
 
-          <button type="submit" className="btn form-btn w-100 py-2">Update</button>
+          <button type="submit" className="btn form-btn w-100 py-2" disabled={isLoading}>
+            { isLoading ? <ButtonLoader></ButtonLoader> : "Update"}
+          </button>
         </form>
       </div>
     </div>

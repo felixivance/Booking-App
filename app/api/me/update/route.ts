@@ -15,7 +15,7 @@ const router = createEdgeRouter<NextRequest, RequestContext>();
 
 dbConnect();
 
-router.use(isAuthenticatedUser).get(updateProfile);
+router.use(isAuthenticatedUser).put(updateProfile);
 
 
 export async function PUT( request: NextRequest , context: RequestContext) {
