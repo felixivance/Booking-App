@@ -23,6 +23,9 @@ export const registerUser = catchAsyncErrors(async (req: NextRequest)=>{
 export const updateProfile = catchAsyncErrors(async (req: NextRequest)=>{
     const body = await req.json()
 
+    console.log("backed");
+    console.log(body)
+
     const userData = {
         name: body.name,
         email: body.email

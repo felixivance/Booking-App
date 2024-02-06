@@ -1,33 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
 
-type handlerFunction = (request: NextRequest, params:any) => Promise<NextResponse>;
+type HandlerFunction = (request: NextRequest, params:any) => Promise<NextResponse>;
 
 interface InterfaceValidationError {
     message: string;
 }
 
-export const catchAsyncErrors = ( handler: handlerFunction ) => async(request:NextRequest, params:any)=>{
-    try{
-        return await handler(request, params)
-    }catch(error:any){
-        console.log(error)
-        if(error?.name === 'CastError'){
-            error.message = `Resource not found. Invalid: ${error.path}`
-            error.statusCode = 400; // bad request
-        }
+export const catchAsyncErrors =
+  (handler: HandlerFunction) => async (req: NextRequest, params: any) => {
+    try {
+      return await handler(req, params);
+    } catch (error: any) {
+      if (error?.name === "CastError") {
+        error.message = `Resource not found. Invalid ${error?.path}`;
+        error.statusCode = 400;
+      }
 
-        if(error?.name == 'ValidationError'){
-            const message = Object.values<InterfaceValidationError>(error.errors).map((value:any) => value.message);
-            // const message = Object.values(error.errors)
-            error.message = message;
-            error.statusCode = 400;
-        
-        }
+      if (error?.name === "ValidationError") {
+        error.message = Object.values<InterfaceValidationError>(error.errors).map(
+          (value) => value.message
+        );
+        error.statusCode = 400;
+      }
 
-        return NextResponse.json({
-            success: false,
-            message: error.message
-        }, {status: error.statusCode || 500})
+      // Handling mongoose duplicate key error
+      if (error.code === 11000) {
+        error.message = `Duplicate ${Object.keys(error.keyValue)} entered`;
+      }
+
+      return NextResponse.json(
+        {
+          errMessage: error.message,
+        },
+        { status: error.statusCode || 500 }
+      );
     }
-
-}
+  };
