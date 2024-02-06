@@ -1,10 +1,11 @@
 "use client"
 import { useLazyUpdateSessionQuery, useUpdateProfileMutation } from '@/redux/api/userApi';
-import { useAppSelector } from '@/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/redux/hooks';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 import ButtonLoader from '../layout/ButtonLoader';
+import { setUser } from '@/redux/features/userSlice';
 
 function UpdateProfile() {
 
@@ -14,15 +15,17 @@ function UpdateProfile() {
 
     const { user: currentUser } = useAppSelector((state)=>state.auth)
 
-    console.log(currentUser);
-
     const [ updateProfile, { isLoading, error, isSuccess } ] = useUpdateProfileMutation();
 
     const [ updateSession, { data }] = useLazyUpdateSessionQuery();
 
-    console.log(data);
-
     const router = useRouter();
+
+    const dispatch = useAppDispatch();
+
+    if( data){
+      dispatch(setUser(data?.user))
+    }
 
     useEffect(() => {
         if (currentUser) {
@@ -52,7 +55,7 @@ function UpdateProfile() {
       updateProfile(userData);
     }
   return (
-    <div className="row wrapper">
+    <div className="row wrapper mt-10">
       <div className="col-10 col-lg-8">
         <form
           className="shadow rounded bg-body"

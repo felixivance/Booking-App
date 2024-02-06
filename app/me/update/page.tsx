@@ -4,7 +4,7 @@ import React from "react"
 const UpdateProfilePage = () => {
 
     return (
-        <div>
+        <div className="">
             <UpdateProfile />
         </div>
     )
