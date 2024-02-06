@@ -68,6 +68,9 @@ async function auth(request: NextApiRequest, response: NextApiResponse){
                 return session
             }
         },
+        pages: {
+            signIn: '/login',
+        },
         secret: process.env.NEXTAUTH_SECRET,
     });
 }
