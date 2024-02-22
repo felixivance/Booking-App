@@ -1,10 +1,17 @@
-import React, { ReactNode } from 'react'
+"use client";
+import UserSidebar from '@/components/layout/UserSidebar';
+import React, { ReactNode, useEffect } from 'react'
 
 interface Props {
     children: ReactNode
 }
 
 const UserLayout=({children}: Props) => {
+
+    useEffect(()=>(
+        console.log('UserLayout')
+    ),[])
+
   return (
     <div>
         <div className="mt-2 mb-4 bg-light py-4">
@@ -16,7 +23,7 @@ const UserLayout=({children}: Props) => {
         <div className="container">
             <div className="row justify-content-around">
                 <div className="col-12 col-lg-3">
-                    <p>User</p>
+                    <UserSidebar />
                 </div>
 
                 <div className="col-12 col-lg-8 user-dashboard">
