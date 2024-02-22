@@ -5,7 +5,7 @@ const UserSidebar = () => {
     const menuItem = [
         {
             name: 'Update Profile',
-            url: '/me/update-profile',
+            url: '/me/update',
             icon: 'fa fa-user'
         },
         {
