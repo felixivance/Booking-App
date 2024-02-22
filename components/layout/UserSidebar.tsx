@@ -41,20 +41,6 @@ const UserSidebar = () => {
                 </Link>
             ))
         }
-      {/* <Link
-        href="menu-item-url-1"
-        className="fw-bold list-group-item list-group-item-action active"
-        aria-current="true"
-      >
-        <i className="menu-item-icon-1 fa-fw pe-2"></i> Menu Item 1
-      </Link>
-      <Link
-        href="menu-item-url-2"
-        className="fw-bold list-group-item list-group-item-action"
-        aria-current="false"
-      >
-        <i className="menu-item-icon-2 fa-fw pe-2"></i> Menu Item 2
-      </Link> */}
       
     </div>
   )
