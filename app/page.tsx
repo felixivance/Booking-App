@@ -24,7 +24,7 @@ export default async function HomePage({searchParams}:{searchParams:string}) {
 
   const data = await getRooms(searchParams);
 
-  if(data?.message){
+  if(data?.errMessage){
     // reset={() => window.location.reload()} 
     return <Error error={data} />
   }

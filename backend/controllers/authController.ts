@@ -56,6 +56,5 @@ export const updatePassword = catchAsyncErrors(async (req: NextRequest)=>{
 
     return NextResponse.json({
         success:true,
-        user
     })
 })
