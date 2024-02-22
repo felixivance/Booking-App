@@ -13,6 +13,7 @@ export interface InterfaceUser extends Document{
     createdAt: Date;
     resetPasswordToken: string;
     resetPasswordExpiry: Date;
+    comparePassword: (enteredPassword: string) => Promise<boolean>
 
 }
 
@@ -46,6 +47,7 @@ const userSchema: Schema<InterfaceUser> = new mongoose.Schema({
     },
     resetPasswordToken: String,
     resetPasswordExpiry: Date
+    
 })
 
 //encrypt password before saving the user
@@ -58,5 +60,11 @@ userSchema.pre("save", async function (next) {
     
         this.password = await bcrypt.hash(this.password, 10);
 });
+
+
+// compare user password
+userSchema.methods.comparePassword = async function(enteredPassword: string){
+    return await bcrypt.compare(enteredPassword, this.password);
+}
 
 export default mongoose.models.User || mongoose.model<InterfaceUser>('User', userSchema)

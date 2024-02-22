@@ -38,3 +38,24 @@ export const updateProfile = catchAsyncErrors(async (req: NextRequest)=>{
         user
     })
 })
+
+// update password => /api/me/update_password
+export const updatePassword = catchAsyncErrors(async (req: NextRequest)=>{
+    const body = await req.json()
+
+    const user =  await User.findById(req?.user?._id).select('+password')
+
+    // check previous user password
+    const isMatched = await user.comparePassword(body.oldPassword)
+    if(!isMatched){
+        throw new Error('Old password is incorrect')
+    }
+
+    user.password = body.password
+    await user.save()
+
+    return NextResponse.json({
+        success:true,
+        user
+    })
+})
