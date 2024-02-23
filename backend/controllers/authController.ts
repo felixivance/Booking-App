@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 import User from "../models/user";
+import { delete_file, upload_file } from "../utils/cloudinary";
+import user from "../models/user";
 
 // register user => /api/auth/register
 export const registerUser = catchAsyncErrors(async (req: NextRequest)=>{
@@ -56,5 +58,27 @@ export const updatePassword = catchAsyncErrors(async (req: NextRequest)=>{
 
     return NextResponse.json({
         success:true,
+    })
+})
+
+// upload user avatar => /api/me/update_avatar
+
+export const uploadAvatar = catchAsyncErrors(async (req: NextRequest) => {
+    const body = await req.json()
+
+    const avatarResponse = await upload_file(body?.avatar, 'bookit-nextjs/avatars');
+
+    // remove previous avatar
+    if(req.user.avatar.public_id){
+        await delete_file(req.user.avatar.public_id);
+    }
+
+    const user = await User.findByIdAndUpdate(req.user._id, {
+        avatar: avatarResponse
+    })
+
+    return NextResponse.json({
+        success:true,
+        user
     })
 })
