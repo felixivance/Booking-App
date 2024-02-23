@@ -18,6 +18,7 @@ const UpdatePassword = () => {
     useEffect(() => {
         if (error && 'data' in error) {
             console.log(error?.data?.errMessage)
+            toast.error(error?.data?.errMessage)
         }
         if (isSuccess) {
             toast.success("Password Updated");
