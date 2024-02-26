@@ -1,5 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose'
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 
 export interface InterfaceUser extends Document{
     name: string;
@@ -65,6 +66,21 @@ userSchema.pre("save", async function (next) {
 // compare user password
 userSchema.methods.comparePassword = async function(enteredPassword: string){
     return await bcrypt.compare(enteredPassword, this.password);
+}
+
+// generate reset password token
+userSchema.methods.getResetPasswordToken = function(){
+    // generate token
+    const resetToken = crypto.randomBytes(20).toString('hex');
+
+    // hash and set to resetPasswordToken
+    this.resetPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+
+    // set token expire time
+    this.resetPasswordExpiry = new Date(Date.now() + 30 * 60 * 1000);
+
+    return resetToken;
+
 }
 
 export default mongoose.models.User || mongoose.model<InterfaceUser>('User', userSchema)
