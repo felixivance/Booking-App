@@ -67,9 +67,9 @@ export const uploadAvatar = catchAsyncErrors(async (req: NextRequest) => {
     const body = await req.json()
 
     const avatarResponse = await upload_file(body?.avatar, 'bookit-nextjs/avatars');
-
+  
     // remove previous avatar
-    if(req.user.avatar.public_id){
+    if(req.user?.avatar && req.user?.avatar?.public_id){
         await delete_file(req.user.avatar.public_id);
     }
 

@@ -7,10 +7,12 @@ cloudinary.v2.config({
 })
 
 const upload_file = (file:string, folder:string): Promise<{public_id:string, url:string}> => {
+    console.log("uploading file")
     return new Promise((resolve, reject)=>{
         cloudinary.v2.uploader.upload(file, {
             resource_type: "auto",
-            folder: folder
+            folder: folder,
+            timeout: 60000
         },
         (error, result:any)=>{
             if(error) return reject(error);
