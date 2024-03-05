@@ -3,6 +3,8 @@ import { catchAsyncErrors } from "../middleware/catchAsyncErrors";
 import User from "../models/user";
 import { delete_file, upload_file } from "../utils/cloudinary";
 import user from "../models/user";
+import { resetPasswordHTMLTemplate } from "../utils/emailTemplate";
+import sendEmail from "../utils/sendEmail";
 
 // register user => /api/auth/register
 export const registerUser = catchAsyncErrors(async (req: NextRequest)=>{
@@ -81,4 +83,48 @@ export const uploadAvatar = catchAsyncErrors(async (req: NextRequest) => {
         success:true,
         user
     })
+})
+
+// forgot password => /api/password/forgot
+
+export const forgotPassword = catchAsyncErrors(async (req: NextRequest)=>{
+    const body = await req.json()
+
+    const user = await User.findOne({ email: body.email})
+
+    if(!user){
+        throw new Error('User not found with this email')
+    }
+
+    // get reset token
+    const resetToken = user.getResetPasswordToken()
+
+    await user.save()
+
+    // create reset password url
+    const resetUrl = `${process.env.APP_URL}/password/reset/${resetToken}`
+
+
+    const message = resetPasswordHTMLTemplate(user?.name, resetUrl)
+
+    try{
+        await sendEmail({
+            email: user.email,
+            subject: 'BookIT Password Recovery',
+            message
+        })
+    }catch(error: any){
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpiry = undefined;
+
+        await user.save()
+
+        throw new Error('Email could not be sent')
+    }
+
+    return NextResponse.json({
+        success:true,
+        user
+    })
+
 })

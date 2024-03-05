@@ -573,5 +573,4 @@ export const resetPasswordHTMLTemplate = (username:string, resetUrl:string) => `
   </body>
 </html>
 
-
 `

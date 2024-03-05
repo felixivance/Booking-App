@@ -15,7 +15,7 @@ export interface InterfaceUser extends Document{
     resetPasswordToken: string;
     resetPasswordExpiry: Date;
     comparePassword: (enteredPassword: string) => Promise<boolean>
-
+    getResetPasswordToken: () => string
 }
 
 const userSchema: Schema<InterfaceUser> = new mongoose.Schema({
